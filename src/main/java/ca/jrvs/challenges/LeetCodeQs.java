@@ -145,6 +145,32 @@ public class LeetCodeQs {
         }
         return -1;
     }
+    
+    public static ListNode addTwoNumbers (ListNode l1, ListNode l2) {
+        ListNode result = new ListNode(0);
+        boolean carry = false;
+
+        while (l1.next != null && l2.next != null) {
+            int sum, val1, val2, c = 0;
+            val1 = (l1.next == null) ? 0 : l1.next.val;
+            val2 = (l2.next == null) ? 0 : l2.next.val;
+            if (carry) { c = 1; }
+
+            sum = val1 + val2 + c;
+            if (sum - 10 > 0) {
+                carry = true;
+                result.val = sum - 10;
+            } else {
+                result.val = sum;
+            }
+
+            result.next = new ListNode(0);
+            result = result.next;
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+        return result;
+    }
 
     private static int tilt = 0;
 
