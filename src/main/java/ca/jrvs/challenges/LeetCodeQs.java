@@ -146,6 +146,99 @@ public class LeetCodeQs {
         return -1;
     }
 
+    private static int tilt = 0;
+
+    public static int findTilt(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        findTilt(root.left);
+
+        if (root.left != null) {
+            tilt += root.left.val;
+        } if (root.right != null) {
+            tilt = Math.abs(tilt - root.right.val);
+        }
+
+        findTilt(root.right);
+        return tilt;
+    }
+
+    public static List<List<Integer>> generate(int numRows){
+        List<List<Integer>> resList = new ArrayList<>(numRows);
+        if (numRows == 0) return resList;
+        resList.add(Arrays.asList(1));
+        if (numRows == 1) return resList;
+
+        for (int row = 2; row <= numRows; row++){
+            List<Integer> ls = new ArrayList<>(row);
+            ls.add(1);
+            for (int i = 1; i < row - 1; i++){
+                ls.add(resList.get(row - 2).get(i - 1) +
+                        resList.get(row - 2).get(i));
+            }
+            ls.add(1);
+            resList.add(ls);
+        }
+        return resList;
+    }
+
+    public static List<String> fizzBuzz(int n){
+        List<String> ls = new ArrayList<>();
+        for (int i = 1; i <= n; i++){
+            String s = "";
+            if ((i % 3) == 0) {
+                s += "Fizz";
+            }
+            if ((i % 5) == 0) {
+                s += "Buzz";
+            }
+            if (s.length() == 0){
+                s += Integer.toString(i);
+            }
+            ls.add(s);
+        }
+        return ls;
+    }
+
+    public static List<String> fizzBuzzOp(int n){
+        List<String> ls = new ArrayList<>();
+        Map<Integer, String> map = new HashMap<>();
+        map.put(3, "Fizz");
+        map.put(5, "Buzz");
+
+        for (int i = 1; i <= n; i++) {
+            String s = "";
+            for (Integer k : map.keySet()) {
+                if (i % k == 0) {
+                    s += map.get(k);
+                }
+            }
+            if (s.length() == 0) {
+                s += Integer.toString(i);
+            }
+            ls.add(s);
+        }
+        return ls;
+    }
+
+    /**
+     * LeetCode 387 FIrst Unique Character in a String
+     * @param s
+     * @return index
+     */
+    public static int firstUniqChar(String s) {
+        int freq[] = new int[26];
+        for (int i = 0; i < s.length(); i++)
+            freq[s.charAt(i) - 'a']++;
+        for (int i = 0; i < s.length(); i++)
+            if (freq[s.charAt(i) - 'a'] == 1)
+                return i;
+        return -1;
+    }
+
+
     public static void main(String[] args) {
 //        System.out.println(reverseOnlyLetters2ptr("ab-cd-ef-gh"));
 //        naturalNumber("12345");
@@ -153,10 +246,28 @@ public class LeetCodeQs {
 //        int[] nums = new int[]{1,2,1};
 //        System.out.println(majorityElement(nums));
 
-        boolean[] notPrime = new boolean[10];
-        if (!notPrime[0]){
-            System.out.println("false");
-        }
+//        boolean[] notPrime = new boolean[10];
+//        if (!notPrime[0]){
+//            System.out.println("false");
+//        }
+
+//        TreeNode root = new TreeNode(1);
+//        root.left = new TreeNode(2);
+//
+//        System.out.println(findTilt(root));
+
+//        List<List<Integer>> resList = generate(5);
+//
+//        for (List l : resList){
+//            for (Object i: l){
+//                System.out.println(i);
+//            }
+//        }
+
+//        for (String s : fizzBuzzOp(15)){
+//            System.out.println(s);
+//        }
+
 
     }
 }
