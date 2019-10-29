@@ -49,6 +49,7 @@ public class main4 {
         return result;
     }
 
+
     public static void movingAverage(int[] arr, int windowSize){
         for (int i=0; i < arr.length - windowSize + 1; i++) {
             int sum = 0;
@@ -69,7 +70,7 @@ public class main4 {
                     break;
                 }
             }
-            if (isPrime == true){
+            if (isPrime){
                 primes++;
             }
         }
@@ -80,10 +81,8 @@ public class main4 {
         if(n <= 1) return 0;
 
         boolean[] notPrime = new boolean[n];
-        notPrime[0] = true;
-        notPrime[1] = true;
 
-        for(int i = 2; i < Math.sqrt(n); i++){
+        for(int i = 2; i*i < n; i++){
             if(!notPrime[i]){
                 for(int j = 2; j*i < n; j++){
                     notPrime[i*j] = true;
@@ -199,6 +198,30 @@ public class main4 {
         head.next.next = head;
         head.next = null;
         return p;
+    }
+
+    public static int removeElement(int[] nums, int val) {
+        int i = 0;
+        for (int j = 0; j < nums.length; j++) {
+            if (nums[j] != val) {
+                nums[i] = nums[j];
+                i++;
+            }
+        }
+        return i;
+    }
+
+    public static boolean containsDup(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+
+        for (int i : nums) {
+            if (set.contains(i)) {
+                return true;
+            } else {
+                set.add(i);
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {
