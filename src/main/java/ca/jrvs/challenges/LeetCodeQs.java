@@ -39,12 +39,11 @@ public class LeetCodeQs {
     }
 
     /**
-     * #390. There is a list of sorted integers from 1 to n. Starting from left to right, remove the first number and every other number afterward until you reach the end of the list.
-     *
-     * Repeat the previous step again, but this time from right to left, remove the right most number and every other number from the remaining numbers.
-     *
+     * #390. There is a list of sorted integers from 1 to n. Starting from left to right, remove the first number
+     * and every other number afterward until you reach the end of the list.
+     * Repeat the previous step again, but this time from right to left, remove the right most number and every
+     * other number from the remaining numbers.
      * We keep repeating the steps again, alternating left to right and right to left, until a single number remains.
-     *
      * Find the last number that remains starting with a list of length n.
      * @param n
      * @return
@@ -264,8 +263,82 @@ public class LeetCodeQs {
         return -1;
     }
 
+    public static void removeDuplicateNodes (ListNode head) {
+        Set<Integer> set = new HashSet<>();
+        ListNode current = head, prev = null;
+
+        while (current != null) {
+            if (set.contains(current.val)) {
+                prev.next = current.next;
+            } else {
+                set.add(current.val);
+                prev = current;
+            }
+            current = current.next;
+        }
+    }
+
+    //helper function to print values of linked list
+    public static void printList(ListNode head) {
+        while (head != null) {
+            System.out.print(head.val + " ");
+            head = head.next;
+        }
+    }
+
+    public static char[] returnDupChars(String s) {
+        int[] chars = new int[26];
+        String res = "";
+        for (char c : s.toCharArray()) {
+            if (chars[c - 'a'] > 0) {
+                res += c;
+            }
+            chars[c - 'a']++;
+        }
+        return res.toCharArray();
+    }
+
+    public static ListNode removeKFromEnd(ListNode head, int k) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode first = dummy;
+        ListNode second = dummy;
+
+        //skip k + 1 (for dummy)
+        for (int i = 0; i < k + 1; i++) {
+            first = first.next;
+        }
+
+        while (first != null) {
+            first = first.next;
+            second = second.next;
+        }
+        second.next = second.next.next;
+        return dummy.next;
+    }
+
+    public static ListNode findNthNodeFromLL(ListNode head, int n){
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode first = dummy, second = dummy;
+
+        for (int i = 0; i < n + 1; i++) {
+            first = first.next;
+        }
+
+        while (first != null) {
+            first = first.next;
+            second = second.next;
+        }
+        return second.next;
+    }
+
 
     public static void main(String[] args) {
+
+//        char[] res = returnDupChars("aabcdeeefb");
+//        System.out.println(new String(res));
+
 //        System.out.println(reverseOnlyLetters2ptr("ab-cd-ef-gh"));
 //        naturalNumber("12345");
 
@@ -294,6 +367,20 @@ public class LeetCodeQs {
 //            System.out.println(s);
 //        }
 
+        ListNode root = new ListNode(1);
+        ListNode a = new ListNode(2);
+        ListNode b = new ListNode(3);
+        ListNode c = new ListNode(4);
+        ListNode d = new ListNode(5);
+
+        root.next = a;
+        a.next = b;
+        b.next = c;
+        c.next = d;
+
+//        printList(root);
+        System.out.println(findNthNodeFromLL(root, 4).val);
+//        printList(root);
 
     }
 }

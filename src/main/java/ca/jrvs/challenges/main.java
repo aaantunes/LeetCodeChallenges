@@ -5,16 +5,13 @@ import java.util.*;
 public class main {
 
     public static int fibIterative(int n){
-        int prev = 0;
-        int next = 1;
-        if (n < 2){
-            return n;
-        }
+        if (n < 2) return n;
 
+        int first = 0, second = 1, next = 1;
         for (int i=2; i < n; i++){
-            int tmp = next;
-            next = prev + next;
-            prev = tmp;
+            next = first + second;
+            first = second;
+            second = next;
         }
         return next;
     }
@@ -83,6 +80,18 @@ public class main {
         return true;
     }
 
+    public static boolean isPalindrome(String input){
+        String s = input.replaceAll("[^A-Za-z0-9]","");
+        int i = 0, j = s.length() - 1;
+
+        while (i < j) {
+            if (s.charAt(i++) != s.charAt(j--)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static boolean isAnagram(String s, String t) {
         if (s.length() != t.length()) {
             return false;
@@ -95,10 +104,6 @@ public class main {
         Arrays.sort(tArr);
 
         return Arrays.equals(sArr, tArr);
-
-//        String sSorted = new String(sArr);
-//        String tSorted = new String(tArr);
-//        return sSorted.equals(tSorted));
     }
 
     public static boolean isAnagramMap(String s, String t) {
@@ -122,6 +127,30 @@ public class main {
                     sMap.remove(c);
                 }
             } else {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    //Best performance
+    public static boolean isAnagramIntArr(String s, String t) {
+        if (s.length() != t.length()) {
+            return false;
+        }
+        int[] chars = new int[26];
+
+        for (char c : s.toCharArray()) {
+            chars[c - 'a']++;
+        }
+
+        for (char c : t.toCharArray()) {
+            chars[c - 'a']--;
+        }
+
+        for (int i : chars) {
+            if (i != 0) {
                 return false;
             }
         }
@@ -320,15 +349,19 @@ public class main {
 
 //        missingNum(arr);
 
-        if (validPalindrome("A man, a plan, a canal: Panama")){
-            System.out.println("true");
-        }
-
-//        if (isAnagram("anagram", "nagaram")) {
-//            System.out.println("is Anagram");
-//        } else {
-//            System.out.println("is not anagram");
+//        if (validPalindrome("A man, a plan, a canal: Panama")){
+//            System.out.println("true");
 //        }
+
+//        if (isPalindrome("abcba")) {
+//            System.out.println("YES, I AM");
+//        }
+
+        if (isAnagram("anagram", "nagaram")) {
+            System.out.println("is Anagram");
+        } else {
+            System.out.println("is not anagram");
+        }
 
 //
 //        int[] arr = {-1, -2, -3, -4, -5};
@@ -361,7 +394,7 @@ public class main {
 //            System.out.println(i);
 //        }
 
-//        System.out.println(fibIterative(5));
+//        System.out.println(fibIterative(8));
 //        System.out.println(fibRecursive(5));
 
 //        System.out.println(reverseWords("Andre is da best"));
